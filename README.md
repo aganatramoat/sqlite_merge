@@ -1,5 +1,9 @@
 ## sqlite_merge
 A tool to merge two sqlite db files into one.
+Given two databases (src and dest) we will replicate in dest the tables 
+and indices in src. This is accomplished by pushing over the binary
+data from the src to dest, and hence should be faster than running
+equivalent sql statements (after attaching one database to the other).
 
 ### compilation/installation
 There is one source file mergedbs.c. Download a sqlite amalgmation
@@ -8,12 +12,15 @@ as usual.
 
 There is a script called install.sh which does all of the above.
 Check the CFLAGS and LIBS in install.sh before invoking.
+Also there is a call to ldconfig that has been commented out, 
+it might be needed for the newly installed library to become the 
+default one for the system.
 It has been tested on a ubuntu installation.
 
 ### invocation from python3
 
 ```python
-from ctypes import CDLL, create\_string\_buffer
+from ctypes import CDLL, create_string_buffer
 import sys
 
 def cpdb(src, dest):
